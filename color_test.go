@@ -1,6 +1,14 @@
 package color
 
+import (
+	"testing"
+)
+
 func Example() {
-	color.Println(color.Red, "Red", color.Green, " Green")
-	color.Println("Part1", color.Magenta, " Part2", "-Part3", color.None, " Part4", color.Red, "!")
+	Println(Red, "Red", Green, " Green")
+	Println("Part1", Magenta, " Part", "2", None, " OK ", Red, "!")
+}
+
+func TestPrintln(t *testing.T) {
+	Example()
 }

@@ -9,5 +9,5 @@ Internally the package github.com/daviddengcn/go-colortext is used.
 
 ```Go
 color.Println(color.Red, "Red", color.Green, " Green")
-color.Println("Part1", color.Magenta, " Part2", "-Part3", color.None, " Part4", color.Red, "!")
+color.Println("Part1", color.Magenta, " Part", "2", color.None, " OK ", color.Red, "!")
 ```
