@@ -4,6 +4,6 @@ Internally the package github.com/daviddengcn/go-colortext is used.
 ## Usage
 
 ```Go
-color.Println(color.Red, "Red", color.Green, " Green")
-color.Println("Part1", color.Blue, " Part", "2", color.None, " OK ", color.Red, "!")
+color.Println(color.Red("Red "), color.Green("Green"))
+color.Println(color.None("Normal"), color.Blue(" %s", "Blue"))
 ```

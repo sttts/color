@@ -5,7 +5,8 @@ import (
 )
 
 func Example() {
-	Println(Red("Red"), None(" %s ", "Normal"), Green("Green"))
+	Println(Red("Red "), Green("Green"))
+	Println(None("Normal"), Blue(" %s", "Blue"))
 }
 
 func TestPrintln(t *testing.T) {
