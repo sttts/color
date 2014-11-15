@@ -24,9 +24,14 @@ func Println(msgs ...ColorMsg) {
 	fmt.Println()
 }
 
+//ColorMsg contains the message and color to use
 type ColorMsg struct {
 	Color   ct.Color
 	Message string
+}
+
+func (colorMsg ColorMsg) String() string {
+	return colorMsg.Message
 }
 
 func newColorMsg(color ct.Color, format string, v ...interface{}) (msg ColorMsg) {
