@@ -7,39 +7,66 @@ import (
 	ct "github.com/daviddengcn/go-colortext"
 )
 
-//Possible colors
-const (
-	None = ct.Color(iota)
-	Black
-	Red
-	Green
-	Yellow
-	Blue
-	Magenta
-	Cyan
-	White
-)
-
 //Println prints text to terminal with colors.
-//The parameters are string or colors in any order.
 //At the end of the line the color will be reset.
-func Println(v ...interface{}) {
-	for _, param := range v {
-		switch v := param.(type) {
-		default:
-			fmt.Printf("unexpected type %T", v)
-		case string:
-			fmt.Print(param)
-			break
-		case ct.Color:
-			color := param.(ct.Color)
-			if color == None {
-				ct.ResetColor()
-			} else {
-				ct.ChangeColor(color, false, ct.None, false)
-			}
+func Println(msgs ...ColorMsg) {
+	for _, colorMsg := range msgs {
+
+		if colorMsg.Color == ct.None {
+			ct.ResetColor()
+		} else {
+			ct.ChangeColor(colorMsg.Color, false, ct.None, false)
 		}
+
+		fmt.Print(colorMsg.Message)
 	}
 	ct.ResetColor()
 	fmt.Println()
+}
+
+type ColorMsg struct {
+	Color   ct.Color
+	Message string
+}
+
+func newColorMsg(color ct.Color, format string, v ...interface{}) (msg ColorMsg) {
+	msg.Color = color
+	msg.Message = fmt.Sprintf(format, v...)
+	return
+}
+
+func None(format string, v ...interface{}) (msg ColorMsg) {
+	return newColorMsg(ct.None, format, v...)
+}
+
+func Black(format string, v ...interface{}) (msg ColorMsg) {
+	return newColorMsg(ct.Black, format, v...)
+}
+
+func Red(format string, v ...interface{}) (msg ColorMsg) {
+	return newColorMsg(ct.Red, format, v...)
+}
+
+func Green(format string, v ...interface{}) (msg ColorMsg) {
+	return newColorMsg(ct.Green, format, v...)
+}
+
+func Yellow(format string, v ...interface{}) (msg ColorMsg) {
+	return newColorMsg(ct.Yellow, format, v...)
+}
+
+func Blue(format string, v ...interface{}) (msg ColorMsg) {
+	return newColorMsg(ct.Blue, format, v...)
+}
+
+func Magenta(format string, v ...interface{}) (msg ColorMsg) {
+	return newColorMsg(ct.Magenta, format, v...)
+}
+
+func Cyan(format string, v ...interface{}) (msg ColorMsg) {
+	return newColorMsg(ct.Cyan, format, v...)
+}
+
+func White(format string, v ...interface{}) (msg ColorMsg) {
+	return newColorMsg(ct.White, format, v...)
 }
