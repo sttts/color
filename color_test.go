@@ -6,7 +6,8 @@ import (
 
 func Example() {
 	Println(Red("Red "), Green("Green"))
-	Println(None("Normal"), Blue(" %s", "Blue"))
+	Println(Magenta("Normal"), Blue(" %s", "Blue"))
+	Println("Normal", Blue(" %s", "Blue"))
 }
 
 func TestPrintln(t *testing.T) {

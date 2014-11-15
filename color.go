@@ -9,16 +9,29 @@ import (
 
 //Println prints text to terminal with colors.
 //At the end of the line the color will be reset.
-func Println(msgs ...ColorMsg) {
-	for _, colorMsg := range msgs {
+func Println(msgs ...interface{}) {
+	for _, msg := range msgs {
 
-		if colorMsg.Color == ct.None {
-			ct.ResetColor()
-		} else {
-			ct.ChangeColor(colorMsg.Color, false, ct.None, false)
+		color := ct.None
+		message := ""
+
+		switch msg.(type) {
+		case ColorMsg:
+			colorMsg := msg.(ColorMsg)
+			color = colorMsg.Color
+			message = colorMsg.Message
+			break
+		default:
+			message = fmt.Sprintf("%v", msg)
 		}
 
-		fmt.Print(colorMsg.Message)
+		if color == ct.None {
+			ct.ResetColor()
+		} else {
+			ct.ChangeColor(color, false, ct.None, false)
+		}
+
+		fmt.Print(message)
 	}
 	ct.ResetColor()
 	fmt.Println()
@@ -38,10 +51,6 @@ func newColorMsg(color ct.Color, format string, v ...interface{}) (msg ColorMsg)
 	msg.Color = color
 	msg.Message = fmt.Sprintf(format, v...)
 	return
-}
-
-func None(format string, v ...interface{}) (msg ColorMsg) {
-	return newColorMsg(ct.None, format, v...)
 }
 
 func Black(format string, v ...interface{}) (msg ColorMsg) {
