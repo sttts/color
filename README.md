@@ -12,4 +12,6 @@ Internally the package github.com/daviddengcn/go-colortext is used.
 		color.Blue("%s", "Blue"))
 ```
 
+![Screenshot](http://i.imgur.com/JX2MWd3.png)
+
 [GoDoc](https://godoc.org/github.com/inando/color)
