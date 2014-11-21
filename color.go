@@ -15,11 +15,14 @@ func Println(msgs ...interface{}) {
 		color := ct.None
 		bgcolor := ct.None
 		message := ""
+		bright := false
 
 		switch msg.(type) {
 		case ColorMsg:
 			colorMsg := msg.(ColorMsg)
 			color = colorMsg.Color
+			bright = colorMsg.Bright
+			
 			bgcolor = colorMsg.BgColor
 			message = colorMsg.Message
 			break
@@ -30,7 +33,7 @@ func Println(msgs ...interface{}) {
 		if color == ct.None && bgcolor == ct.None {
 			ct.ResetColor()
 		} else {
-			ct.ChangeColor(color, false, bgcolor, false)
+			ct.ChangeColor(color, bright, bgcolor, false)
 		}
 
 		fmt.Print(message)
@@ -40,39 +43,67 @@ func Println(msgs ...interface{}) {
 }
 
 func None(format string, v ...interface{}) (msg ColorMsg) {
-	return newColorMsg(ct.None, format, v...)
+	return newColorMsg(ct.None, false, format, v...)
 }
 
 func Black(format string, v ...interface{}) (msg ColorMsg) {
-	return newColorMsg(ct.Black, format, v...)
+	return newColorMsg(ct.Black, false, format, v...)
 }
 
 func Red(format string, v ...interface{}) (msg ColorMsg) {
-	return newColorMsg(ct.Red, format, v...)
+	return newColorMsg(ct.Red, false, format, v...)
 }
 
 func Green(format string, v ...interface{}) (msg ColorMsg) {
-	return newColorMsg(ct.Green, format, v...)
+	return newColorMsg(ct.Green, false, format, v...)
 }
 
 func Yellow(format string, v ...interface{}) (msg ColorMsg) {
-	return newColorMsg(ct.Yellow, format, v...)
+	return newColorMsg(ct.Yellow, false, format, v...)
 }
 
 func Blue(format string, v ...interface{}) (msg ColorMsg) {
-	return newColorMsg(ct.Blue, format, v...)
+	return newColorMsg(ct.Blue, false, format, v...)
 }
 
 func Magenta(format string, v ...interface{}) (msg ColorMsg) {
-	return newColorMsg(ct.Magenta, format, v...)
+	return newColorMsg(ct.Magenta, false, format, v...)
 }
 
 func Cyan(format string, v ...interface{}) (msg ColorMsg) {
-	return newColorMsg(ct.Cyan, format, v...)
+	return newColorMsg(ct.Cyan, false, format, v...)
 }
 
 func White(format string, v ...interface{}) (msg ColorMsg) {
-	return newColorMsg(ct.White, format, v...)
+	return newColorMsg(ct.White, false, format, v...)
+}
+
+func BrRed(format string, v ...interface{}) (msg ColorMsg) {
+	return newColorMsg(ct.Red, true, format, v...)
+}
+
+func BrGreen(format string, v ...interface{}) (msg ColorMsg) {
+	return newColorMsg(ct.Green, true, format, v...)
+}
+
+func BrYellow(format string, v ...interface{}) (msg ColorMsg) {
+	return newColorMsg(ct.Yellow, true, format, v...)
+}
+
+func BrBlue(format string, v ...interface{}) (msg ColorMsg) {
+	return newColorMsg(ct.Blue, true, format, v...)
+}
+
+func BrMagenta(format string, v ...interface{}) (msg ColorMsg) {
+	return newColorMsg(ct.Magenta, true, format, v...)
+}
+
+func BrCyan(format string, v ...interface{}) (msg ColorMsg) {
+	return newColorMsg(ct.Cyan, true, format, v...)
+}
+
+func BrWhite(format string, v ...interface{}) (msg ColorMsg) {
+	return newColorMsg(ct.White, true, format, v...)
 }
 
 //ColorMsg contains the message and color to use
@@ -80,12 +111,14 @@ type ColorMsg struct {
 	Color   ct.Color
 	BgColor ct.Color
 	Message string
+	Bright  bool
 }
 
-func newColorMsg(color ct.Color, format string, v ...interface{}) (msg ColorMsg) {
+func newColorMsg(color ct.Color, bright bool, format string, v ...interface{}) (msg ColorMsg) {
 	msg.Color = color
 	msg.BgColor = ct.None
 	msg.Message = fmt.Sprintf(format, v...)
+	msg.Bright = bright
 	return
 }
 
